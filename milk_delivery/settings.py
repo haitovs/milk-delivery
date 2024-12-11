@@ -26,6 +26,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -35,7 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'couriers',
+    'orders',
+    'reports',
+    'subscriptions',
+    'users',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication',],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,6 +96,12 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
